@@ -8,8 +8,9 @@ function asyncComponent(getComponent) {
     return class AsyncComponent extends React.Component {
         constructor(props) {
             super(props);
-            let Component = null;
-            this.state = { Component: AsyncComponent.Component };
+            this.state = {
+                Component: AsyncComponent.Component
+            };
         }
 
         componentWillMount() {

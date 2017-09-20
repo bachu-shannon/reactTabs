@@ -6,10 +6,6 @@ export default class Navigation extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        console.log(this.props);
-    }
-
     render() {
         return(
             <nav>
