@@ -30,27 +30,18 @@ function asyncComponent(getComponent) {
     }
 }
 
-const dummyTable = asyncComponent(() =>
-    import('./tabs/dummyTable')
-        .then(module => module.default)
-);
-const dummyChart = asyncComponent(() =>
-    import('./tabs/dummyChart')
-        .then(module => module.default)
-);
-const dummyList = asyncComponent(() =>
-    import('./tabs/dummyList')
-        .then(module => module.default)
-);
-
 const App = () => (
     <div>
         <Navigation tabs={data} />
         <Switch>
             <Route exact path="/" render={() => (<Redirect to="/dummyTable"/>)}/>
-            <Route path="/dummyTable" component={dummyTable} />
-            <Route path="/dummyChart" component={dummyChart} />
-            <Route path="/dummyList" component={dummyList} />
+            {data.map((tab, index) => {
+				let typeComponent = asyncComponent(() =>
+					import(`/${tab.path}`)
+						.then(module => module.default)
+                );
+                return <Route path={`/${tab.id}`} component={typeComponent} key={tab.order} />
+            })}
         </Switch>
     </div>
 );
