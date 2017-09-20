@@ -36,9 +36,9 @@ const App = () => (
         <Switch>
             <Route exact path="/" render={() => (<Redirect to="/dummyTable"/>)}/>
             {data.map((tab, index) => {
-				let typeComponent = asyncComponent(() =>
-					import(`/${tab.path}`)
-						.then(module => module.default)
+                let typeComponent = asyncComponent(() =>
+                                        import(`/${tab.path}`)
+                                            .then(module => module.default)
                 );
                 return <Route path={`/${tab.id}`} component={typeComponent} key={tab.order} />
             })}
