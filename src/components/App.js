@@ -31,11 +31,21 @@ function asyncComponent(getComponent) {
     }
 }
 
+
+function getDefaultRoute(tabs) {
+	let defaultComponent = tabs.reduceRight(function(previousTab, currentTab) {
+		console.log('previousOrder = ' + previousTab.order);
+		console.log('currentOrder = ' + currentTab.order);
+		return (previousTab.order > currentTab.order) ? currentTab : previousTab;
+	});
+	return <Route exact path="/" render={() => (<Redirect to={`/${defaultComponent.id}`}/>)}/>;
+}
+
 const App = () => (
     <div>
         <Navigation tabs={data} />
         <Switch>
-            <Route exact path="/" render={() => (<Redirect to="/dummyTable"/>)}/>
+            {getDefaultRoute(data)}
             {data.map((tab, index) => {
                 let typeComponent = asyncComponent(() =>
                                         import(`/${tab.path}`)
